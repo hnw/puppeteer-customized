@@ -1,11 +1,12 @@
 'use strict'
-const myPuppeteer = require('puppeteer');
+const puppeteer = require('puppeteer');
+const myPuppeteer = Object.assign({}, puppeteer);
 
 // private variables
 let defaults = {};
 
 // add new method setDefaults()
-const setDefaults = (options) => {
+myPuppeteer.setDefaults = function(options = {}) {
   /* some custom behavior */
   Object.entries(options).forEach(([k, v]) => {
     const camelCase = k.replace(/([-_]+[a-z0-9])/ig, ($1) => {
@@ -23,15 +24,13 @@ const setDefaults = (options) => {
   });
   return myPuppeteer;
 };
-myPuppeteer.setDefaults = setDefaults;
 
 // replace puppeteer.launch()
 const origLaunch = myPuppeteer.launch;
-const launch = (options = {}) => {
+myPuppeteer.launch = function(options = {}) {
   const merged = Object.assign({}, defaults, options);
   const browser = origLaunch.apply(myPuppeteer, [merged]);
   return browser;
 }
-myPuppeteer.launch = launch;
 
-exports = module.exports = myPuppeteer;
+module.exports = myPuppeteer;
