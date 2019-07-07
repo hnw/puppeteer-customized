@@ -1,6 +1,8 @@
 'use strict'
 const puppeteer = require('puppeteer');
-const myPuppeteer = Object.assign({}, puppeteer);
+// オブジェクトをclone
+// via: https://stackoverflow.com/questions/41474986/how-to-clone-a-javascript-es6-class-instance
+const myPuppeteer = Object.assign(Object.create(Object.getPrototypeOf(puppeteer)), puppeteer);
 const {ElementHandle} = require('puppeteer/lib/api');
 
 ElementHandle.prototype.isVisible = async function () {
