@@ -1,6 +1,6 @@
 {
   "name": "@hnw/puppeteer-customized",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A customized version of puppeteer",
   "main": "puppeteer-customized.js",
   "private": false,
