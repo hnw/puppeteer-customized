@@ -38,6 +38,11 @@ myPuppeteer.setDefaults = function (options = {}) {
         defaults[result[1]] = {};
       }
       defaults[result[1]][result[2].toLowerCase()] = v;
+    } else if (k === 'proxyServer') {
+      if (!defaults['args']) {
+        defaults['args'] = [];
+      }
+      defaults.args.push('--proxy-server=' + v);
     } else {
       defaults[camelCase] = v;
     }
