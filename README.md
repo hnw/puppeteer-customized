@@ -9,7 +9,7 @@ A customized version of puppeteer
 To use puppeteer-customized in your project, run:
 
 ```
-npm i hnw/puppeteer-customized
+npm i @hnw/puppeteer-customized
 ```
 
 or write a `package.json` file as follows, then run `npm i`.
@@ -18,7 +18,7 @@ or write a `package.json` file as follows, then run `npm i`.
 {
   "name": "test_app",
   "dependencies": {
-    "my-puppeteer": "hnw/puppeteer-customized"
+    "@hnw/puppeteer-customized": "*",
   }
 }
 ```
