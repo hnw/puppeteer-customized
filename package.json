@@ -11,6 +11,6 @@
   "author": "hnw",
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "*"
+    "puppeteer": "<=5.1.0"
   }
 }
