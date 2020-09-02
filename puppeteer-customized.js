@@ -5,22 +5,22 @@ const puppeteer = require('puppeteer');
 const myPuppeteer = Object.assign(Object.create(Object.getPrototypeOf(puppeteer)), puppeteer);
 const {ElementHandle, Page} = require('puppeteer/lib/api');
 
-// via: https://stackoverflow.com/questions/19669786/check-if-element-is-visible-in-dom/21696585
 ElementHandle.prototype.isVisible = async function () {
-  return await this.executionContext().evaluate(el => {
-    if (!el) return false;
-    const style = window.getComputedStyle(el);
-    if (!style) return false;
-    if (style.display === 'none') return false;
-    if (style.visibility !== 'visible') return false;
-    if (style.opacity < 0.1) return false;
-    const bRect = el.getBoundingClientRect();
-    if (el.offsetWidth + el.offsetHeight + bRect.height + bRect.width === 0) {
-        return false;
-    }
-    return true;
-  }, this);
-};
+  return this.boundingBox().then(obj => obj !== null);
+}
+
+Object.defineProperty(ElementHandle.prototype, 'visibleText', {
+  async get() {
+    return Promise.all(
+      (await this.$x('descendant::text()')).map(async el => {
+        if (!await el.isVisible()) {
+          return '';
+        };
+        return el.evaluate(node => node.textContent.trim().replace(/\s+/g,' '));
+      })
+    ).then(texts => texts.filter(Boolean).join(' '));
+  }
+});
 
 Object.defineProperty(ElementHandle.prototype, 'textContent', {
   async get() {
